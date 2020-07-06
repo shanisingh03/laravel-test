@@ -1,4 +1,4 @@
-*************************Steps TO Follow ****************
+*************************Steps I Followed ****************
 1- composer create-project --prefer-dist laravel/laravel nehatest
 
 2- composer require laravel/ui
@@ -13,4 +13,16 @@
     inside run function define
         $this->call(UserSeeder::class);
 6- php artisan db:seed
-7-
+7-php artisan storage:link
+  To Link Storage & Public Folder
+8-php artisan make:migration Company -crm 
+  php artisan make:migration Employee -crm
+
+  This is Used To generate model, ResourceController, migration
+
+9- Write Migration in database/migration
+
+10- php artisan migrate
+    To Migrate Above
+
+11- CRUD of Both
