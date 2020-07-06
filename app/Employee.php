@@ -12,4 +12,9 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Company');
     }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
 }

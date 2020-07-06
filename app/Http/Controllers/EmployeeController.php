@@ -66,7 +66,8 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        $companies = Company::select('id','name')->get();
+        return view('employee.edit')->with(['employee'=>$employee, 'companies' => $companies]);
     }
 
     /**
@@ -78,7 +79,11 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeUpdateRequest $request, Employee $employee)
     {
-        //
+        $data = $request->except('_token','_method');
+
+        Employee::whereId($employee->id)->update($data);
+
+        return redirect()->route('employees.index')->with('status','Employee Updated Successfully.');
     }
 
     /**
@@ -89,6 +94,8 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        Employee::whereId($employee->id)->delete();
+
+        return redirect()->route('employees.index')->with('status','Employee Deleted Successfully.');
     }
 }
