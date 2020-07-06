@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use App\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\EmployeeStoreRequest;
+use App\Http\Requests\EmployeeUpdateRequest;
 
 class EmployeeController extends Controller
 {
@@ -14,7 +17,8 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        $employees = Employee::paginate(10);
+        return view('employee.index')->with(['employees'=>$employees]);
     }
 
     /**
@@ -24,7 +28,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $companies = Company::select('id','name')->get();
+        return view('employee.add')->with(['companies'=>$companies]);
     }
 
     /**
@@ -33,9 +38,13 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeStoreRequest $request)
     {
-        //
+        $data = $request->except('_token');
+
+        Employee::create($data);
+
+        return redirect()->route('employees.index')->with('status','Employee Created Successfully.');
     }
 
     /**
@@ -67,7 +76,7 @@ class EmployeeController extends Controller
      * @param  \App\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeUpdateRequest $request, Employee $employee)
     {
         //
     }
